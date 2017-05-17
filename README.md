@@ -16,17 +16,32 @@ public class Solution {
         //看了讨论区的代码，写的真标准啊
         Map<Integer, Integer> map = new HashMap<>();
         
-        for(int i = 0; i < nums.length; i++){
+        for(int i = 0; i < nums.length; i++) {
             map.put(nums[i], i);
         }
         
-        for(int i = 0; i < nums.length; i++){
+        for(int i = 0; i < nums.length; i++) {
             int complement = target - nums[i];
             //附加条件防止出现 6 [3,2,4] 3的时候自身重复情况
-            if(map.containsKey(complement) && map.get(complement) != i){
-                return new int[] { i, map.get(complement)};
+            if(map.containsKey(complement) && map.get(complement) != i) {
+                return new int[] { i, map.get(complement) };
             }
         }
         throw new IllegalArgumentException("No two sum solution");
     }
+}
+
+优化后其实一边遍历就好
+public class Solution{
+    public int[] twoSun(int[] nums, int target) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+            if(map.containsKey(complement)) {
+                return new int[] {map.get(nums[i]), i};
+            }
+            map.put(nums[i], i);
+        }
+        throw new IllegalArgumentException("No two sum solution");
+    }
 }
